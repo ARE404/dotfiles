@@ -1,8 +1,8 @@
 # ─── 基础配置 ──────────────────────────────────────────────
 
 # 如果需要性能分析，请取消下面两行注释
-zmodload zsh/zprof
-#zprof
+# zmodload zsh/zprof
+# zprof
 
 # 跳过系统级的 compinit 审计
 skip_global_compinit=1
@@ -20,11 +20,11 @@ fi
 
 # ─── PowerLevel10k ──────────────────────────────────────────
 
-start_time=$SECONDS
+# start_time=$SECONDS
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
   source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
 fi
-echo "PowerLevel10k init took: $(( SECONDS - start_time )) seconds"
+# echo "PowerLevel10k init took: $(( SECONDS - start_time )) seconds"
 
 # 使用 Vi 模式
 set -o vi
@@ -51,9 +51,9 @@ DISABLE_AUTO_UPDATE=true
 POWERLEVEL9K_DISABLE_GITSTATUS=true
 POWERLEVEL9K_DISABLE_SSH=true
 
-start_time=$SECONDS
+# start_time=$SECONDS
 source $ZSH/oh-my-zsh.sh
-echo "Oh-My-Zsh init took: $(( SECONDS - start_time )) seconds"
+# echo "Oh-My-Zsh init took: $(( SECONDS - start_time )) seconds"
 
 # ─── 其他工具初始化 ─────────────────────────────────────────
 
@@ -93,7 +93,7 @@ path_append "/Library/PostgreSQL/15/bin"
 path_append "$(go env GOPATH)/bin"
 
 # ─── （若启用性能分析）在文件末尾输出结果 ────────────────────
-zprof
+# zprof
 source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
 source /opt/homebrew/opt/chruby/share/chruby/auto.sh
 chruby ruby-3.4.1
