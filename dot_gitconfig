@@ -1,0 +1,13 @@
+[user]
+	name = 404ARE
+	email = 936233544@qq.com
+[https]
+	proxy = http://127.0.0.1:1080
+[http]
+	postBuffer = 1048576000
+	version = HTTP/1.1
+	sslVerify = false
+[safe]
+	directory = /opt/homebrew/Library/Taps/homebrew/homebrew-core
+	directory = /opt/homebrew/Library/Taps/homebrew/homebrew-cask
+	directory = /opt/homebrew/Library/Taps/homebrew/homebrew-services

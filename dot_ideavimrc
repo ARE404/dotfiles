@@ -1,0 +1,36 @@
+let mapleader="\<space>"
+nnoremap <leader>w :w!<CR>
+nnoremap <leader>q :q!<CR>
+
+"jump between open files
+"nnoremap <leader>j :bprevious<CR>
+"nnoremap <leader>k :bnext<CR>
+"
+""rename functions variables
+nnoremap <leader>r :action RenameElement<CR>
+
+nnoremap <leader>d :action GotoDeclaration<CR>
+nnoremap <leader>e :action GotoNextError<CR>
+nnoremap <leader>E :action GotoPreviousError<CR>
+
+"sorround with snippets such as if
+"nnoremap <leader>s :action SurroundWith<CR>
+"vnoremap <leader>s :action SurroundWith<CR>
+"
+""insert template code such as if, main method
+noremap <leader>i :action InsertLiveTemplate<CR>
+
+"comment one line
+"nnoremap <leader>/ :action CommentByLineComment<CR>
+"vnoremap <leader>/ :action CommentByLineComment<CR>
+"
+""formatcode
+nnoremap = :action ReformatCode<CR>
+vnoremap = :action ReformatCode<CR>
+
+nnoremap <leader>a :action<space>
+set NERDTree
+set easymotion
+nnoremap <leader>n :NERDTreeToggle<CR>
+
+set surround

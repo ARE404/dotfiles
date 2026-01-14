@@ -1,0 +1,17 @@
+
+# nvm config
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
+export NVM_NODEJS_ORG_MIRROR=https://npm.taobao.org/mirrors/node
+
+[ -f ~/.fzf.bash ] && source ~/.fzf.bash
+alias clr="clear"
+alias wsh="echo $SHELL"
+alias ldbrc="source ~/.bashrc"
+alias ll="ls -lh"
+alias lla="ls -alh"
+alias v="vim"
+alias gs="git status"
+alias gc="git commit"
+alias edbrc="vim ~/.bashrc"
+. "$HOME/.cargo/env"
