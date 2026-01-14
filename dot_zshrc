@@ -1,17 +1,102 @@
-# .zshrc
-# Managed by chezmoi
+# ─── 基础配置 ──────────────────────────────────────────────
 
-# Path to your oh-my-zsh installation (if using)
-# export ZSH="$HOME/.oh-my-zsh"
+# 如果需要性能分析，请取消下面两行注释
+zmodload zsh/zprof
+#zprof
 
-# Basic configurations
-# export LANG=en_US.UTF-8
-# export EDITOR='vim'
+# 跳过系统级的 compinit 审计
+skip_global_compinit=1
 
-# Aliases
-# alias ll='ls -lah'
+# 高效补全初始化：仅在 .zcompdump 过期时全量，否则使用缓存并跳过 compaudit
+autoload -Uz compinit
+zstyle ':completion:*' use-cache on
+zstyle ':completion:*' cache-path ~/.zsh/cache
 
-# History settings
-# HISTSIZE=10000
-# SAVEHIST=10000
-# HISTFILE=~/.zsh_history
+if [[ $(date +'%j') != $(stat -f '%Sm' -t '%j' ~/.zcompdump 2>/dev/null) ]]; then
+  compinit -i     # 首次或过期时，运行一次完整初始化并跳过安全审计
+else
+  compinit -C     # 正常启动时直接用缓存并跳过审计
+fi
+
+# ─── PowerLevel10k ──────────────────────────────────────────
+
+start_time=$SECONDS
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+echo "PowerLevel10k init took: $(( SECONDS - start_time )) seconds"
+
+# 使用 Vi 模式
+set -o vi
+
+# ─── Homebrew 环境 ─────────────────────────────────────────
+
+# 只执行 eval，不再每次写入 .zprofile
+eval "$(/opt/homebrew/bin/brew shellenv)"
+
+# ─── Oh-My-Zsh 配置 ───────────────────────────────────────
+
+export ZSH="$HOME/.oh-my-zsh"
+ZSH_THEME="powerlevel10k/powerlevel10k"
+
+# 按需调整插件顺序与数量
+plugins=(
+  git
+  z
+  zsh-syntax-highlighting
+  zsh-autosuggestions
+)
+
+DISABLE_AUTO_UPDATE=true
+POWERLEVEL9K_DISABLE_GITSTATUS=true
+POWERLEVEL9K_DISABLE_SSH=true
+
+start_time=$SECONDS
+source $ZSH/oh-my-zsh.sh
+echo "Oh-My-Zsh init took: $(( SECONDS - start_time )) seconds"
+
+# ─── 其他工具初始化 ─────────────────────────────────────────
+
+# fzf
+[[ -f ~/.fzf.zsh ]] && source ~/.fzf.zsh
+
+# powerlevel10k 配置
+[[ -f ~/.p10k.zsh ]] && source ~/.p10k.zsh
+
+# 懒加载 conda
+function conda() {
+  unfunction conda
+  local CONDA_PATH="$HOME/opt/anaconda3"
+  export PATH="${CONDA_PATH}/bin:${PATH}"
+  __conda_setup="$("${CONDA_PATH}/bin/conda" 'shell.zsh' 'hook' 2>/dev/null)"
+  if [[ $? -eq 0 ]]; then
+    eval "$__conda_setup"
+  elif [[ -f "${CONDA_PATH}/etc/profile.d/conda.sh" ]]; then
+    source "${CONDA_PATH}/etc/profile.d/conda.sh"
+  fi
+  unset __conda_setup
+  conda "$@"
+}
+
+# 自定义别名
+source ~/alias.sh
+
+# 路径追加函数
+path_append() {
+  if [[ -d $1 && :$PATH: != *:$1:* ]]; then
+    PATH="${PATH:+"$PATH:"}$1"
+  fi
+}
+path_append "/opt/homebrew/opt/node"
+path_append "/opt/homebrew/Cellar/node/22.10.0/bin"
+path_append "/Library/PostgreSQL/15/bin"
+path_append "$(go env GOPATH)/bin"
+
+# ─── （若启用性能分析）在文件末尾输出结果 ────────────────────
+zprof
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.4.1
+source /opt/homebrew/opt/chruby/share/chruby/chruby.sh
+source /opt/homebrew/opt/chruby/share/chruby/auto.sh
+chruby ruby-3.3.6
