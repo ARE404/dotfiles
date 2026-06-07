@@ -15,12 +15,19 @@ if ! command -v brew &>/dev/null; then
     [[ $(uname -m) == "arm64" ]] && eval "$(/opt/homebrew/bin/brew shellenv)"
 fi
 
-# 2. chezmoi + dotfiles
+# 2. chezmoi + dotfiles（每次强制拉最新）
 if ! command -v chezmoi &>/dev/null; then
     echo "📦 安装 chezmoi..."
     brew install chezmoi
 fi
-chezmoi init --apply "$DOTFILES_REPO"
+
+if [ -d "$HOME/.local/share/chezmoi" ]; then
+    echo "📥 更新 dotfiles（已存在，拉取最新）..."
+    chezmoi update --apply
+else
+    echo "📥 克隆 dotfiles..."
+    chezmoi init --apply "$DOTFILES_REPO"
+fi
 
 # 3. 第三方 tap（先于 bundle，避免顺序问题）
 echo "🔌 添加第三方 tap: nikitabobko/tap (AeroSpace)..."
