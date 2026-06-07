@@ -2,6 +2,10 @@
 # 生成: brew bundle dump --file=~/Brewfile
 # 安装: brew bundle install --file=~/Brewfile
 
+# ─── Taps (第三方仓库) ────────────────────────────
+
+tap "nikitabobko/tap"
+
 # ─── Casks (GUI 应用) ────────────────────────────
 
 # 终端
