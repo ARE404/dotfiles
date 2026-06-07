@@ -22,7 +22,10 @@ if ! command -v chezmoi &>/dev/null; then
 fi
 chezmoi init --apply "$DOTFILES_REPO"
 
-# 3. Brew 应用
+# 3. 第三方 tap（先于 bundle，避免顺序问题）
+brew tap nikitabobko/tap 2>/dev/null || true
+
+# 4. Brew 应用
 if [[ -f "$HOME/Brewfile" ]]; then
     brew bundle install --file="$HOME/Brewfile"
 else
