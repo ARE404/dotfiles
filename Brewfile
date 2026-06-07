@@ -12,7 +12,6 @@ tap "nikitabobko/tap"
 cask "ghostty"
 
 # AI
-cask "alma"
 cask "codex-app"
 cask "claude"
 
@@ -35,7 +34,6 @@ cask "iina"
 cask "obsidian"
 
 # 通讯
-cask "qq"
 cask "wechat"
 
 # 浏览器
