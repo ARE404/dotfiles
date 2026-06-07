@@ -33,11 +33,10 @@ fi
 echo "🔌 添加第三方 tap: nikitabobko/tap (AeroSpace)..."
 brew tap nikitabobko/tap 2>/dev/null && echo "   ✅ tap 已添加" || echo "   ⚠️  tap 已存在或添加失败，继续... "
 
-# 4. Brew 应用
-if [[ -f "$HOME/Brewfile" ]]; then
-    brew bundle install --file="$HOME/Brewfile"
-else
-    echo "⚠️  Brewfile 未找到，跳过。chezmoi apply 应该已恢复它"
-fi
+# 4. Brew 应用（直接拉 GitHub 最新 Brewfile，绕过 chezmoi 缓存）
+echo "📥 拉取最新 Brewfile..."
+curl -fsSL "https://raw.githubusercontent.com/ARE404/dotfiles/master/Brewfile" -o "$HOME/Brewfile"
+echo "📦 安装应用..."
+brew bundle install --file="$HOME/Brewfile"
 
 echo "✨ 完成!"
