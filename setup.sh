@@ -37,6 +37,6 @@ brew tap nikitabobko/tap 2>/dev/null && echo "   ✅ tap 已添加" || echo "   
 echo "📥 拉取最新 Brewfile..."
 curl -fsSL "https://raw.githubusercontent.com/ARE404/dotfiles/master/Brewfile" -o "$HOME/Brewfile"
 echo "📦 安装应用..."
-brew bundle install --file="$HOME/Brewfile"
+brew bundle install --verbose --file="$HOME/Brewfile"
 
 echo "✨ 完成!"
