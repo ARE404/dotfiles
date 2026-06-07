@@ -23,7 +23,8 @@ fi
 chezmoi init --apply "$DOTFILES_REPO"
 
 # 3. 第三方 tap（先于 bundle，避免顺序问题）
-brew tap nikitabobko/tap 2>/dev/null || true
+echo "🔌 添加第三方 tap: nikitabobko/tap (AeroSpace)..."
+brew tap nikitabobko/tap 2>/dev/null && echo "   ✅ tap 已添加" || echo "   ⚠️  tap 已存在或添加失败，继续... "
 
 # 4. Brew 应用
 if [[ -f "$HOME/Brewfile" ]]; then
